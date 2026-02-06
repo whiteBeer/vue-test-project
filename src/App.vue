@@ -2,7 +2,6 @@
 </script>
 
 <template>
-  Main page
   <nav>
     <RouterLink to="/">Main page</RouterLink>
     <RouterLink to="/second-page">Second page</RouterLink>
@@ -12,4 +11,12 @@
   </main>
 </template>
 
-<style scoped></style>
+<style scoped>
+  nav {
+    border: 1px solid;
+    padding: 10px;
+  }
+  a {
+    display: block;
+  }
+</style>
