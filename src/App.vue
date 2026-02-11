@@ -3,8 +3,8 @@
 
 <template>
   <nav>
-    <RouterLink to="/">Main page</RouterLink>
-    <RouterLink to="/second-page">Second page</RouterLink>
+    <RouterLink to="/">Progress Page</RouterLink>
+    <RouterLink to="/chart-page">Chart Page</RouterLink>
   </nav>
   <main>
     <RouterView />
@@ -15,8 +15,17 @@
   nav {
     border: 1px solid;
     padding: 10px;
+    margin-bottom: 20px;
   }
   a {
     display: block;
+  }
+</style>
+
+<style>
+  body {
+    font-family: 'Inter', sans-serif;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
   }
 </style>
