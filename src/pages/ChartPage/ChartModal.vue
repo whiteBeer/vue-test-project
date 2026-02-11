@@ -1,4 +1,6 @@
 <script setup lang="ts">
+import type {Sector} from './types.ts';
+
 import { ref, watch } from 'vue';
 import { ChromePicker } from 'vue-color';
 import 'vue-color/style.css';
@@ -7,12 +9,6 @@ import FloatLabel from 'primevue/floatlabel';
 import InputText from 'primevue/inputtext';
 import InputNumber from 'primevue/inputnumber';
 import Button from 'primevue/button';
-
-interface Sector {
-  label: string;
-  value: number;
-  color: string;
-}
 
 const props = defineProps<{
   isOpen: boolean;
@@ -26,7 +22,7 @@ const emit = defineEmits<{
 
 const name = ref('');
 const value = ref<number | undefined>(undefined);
-const color = ref('#f87171');
+const color = ref('#5272e3');
 
 watch(
   () => props.isOpen,
@@ -39,7 +35,7 @@ watch(
       } else {
         name.value = '';
         value.value = undefined;
-        color.value = '#f87171';
+        color.value = '#5272e3';
       }
     }
   }
@@ -47,14 +43,10 @@ watch(
 
 function handleSubmit() {
   if (name.value && value.value && value.value > 0) {
-    const colorHex = typeof color.value === 'object'
-      ? (color.value as any).hex
-      : color.value;
-
     emit('save', {
       label: name.value,
       value: value.value,
-      color: colorHex
+      color: color.value
     });
   }
 }
@@ -65,7 +57,7 @@ function handleSubmit() {
     <div class="modal-form">
       <h3>{{ sectorToEdit ? 'Редактировать сектор' : 'Добавить новый сектор' }}</h3>
 
-      <FloatLabel variant="in" class="form-group">
+      <FloatLabel variant="in" class="form-group" style="margin-top: 0">
         <InputText id="sector-name" v-model="name" />
         <label for="sector-name">Название</label>
       </FloatLabel>
@@ -90,17 +82,17 @@ function handleSubmit() {
 </template>
 
 <style scoped>
-.modal-form {
-  display: flex;
-  flex-direction: column;
-  gap: 1.5rem;
-}
-.form-group {
-  margin-top: 1rem;
-}
-.color-picker-wrapper {
-  display: flex;
-  justify-content: center;
-  margin-top: 10px;
-}
+  .modal-form {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+  }
+  .form-group {
+    margin-top: 1rem;
+  }
+  .color-picker-wrapper {
+    display: flex;
+    justify-content: center;
+    margin-top: 10px;
+  }
 </style>

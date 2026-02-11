@@ -1,9 +1,9 @@
 <script setup lang="ts">
-  defineProps<{
+defineProps<{
     isOpen: boolean
   }>();
 
-  const emit = defineEmits<{
+const emit = defineEmits<{
     (e: 'close'): void
   }>();
 </script>

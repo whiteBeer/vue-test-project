@@ -1,4 +1,6 @@
 <script setup lang="ts">
+import type {Sector} from './types.ts';
+
 import { ref, computed } from 'vue';
 import { Pie } from 'vue-chartjs';
 import { Chart as ChartJS, Title, Legend, ArcElement } from 'chart.js';
@@ -7,20 +9,13 @@ import Button from 'primevue/button';
 
 ChartJS.register(Title, Legend, ArcElement);
 
-interface Sector {
-  label: string;
-  value: number;
-  color: string;
-}
-
 const isModalOpen = ref(false);
 const sectors = ref<Sector[]>([
-  { label: 'Сектор 1', value: 40, color: '#41B883' },
-  { label: 'Сектор 2', value: 20, color: '#E46651' },
-  { label: 'Сектор 3', value: 12, color: '#00D8FF' },
+  { label: 'Сектор-1', value: 40, color: '#41B883' },
+  { label: 'Сектор-2', value: 20, color: '#E46651' },
+  { label: 'Сектор-3', value: 12, color: '#00D8FF' },
 ]);
 
-// Состояние для редактирования
 const editingSectorIndex = ref<number | null>(null);
 const sectorToEdit = computed(() =>
   editingSectorIndex.value !== null ? sectors.value[editingSectorIndex.value] : null
@@ -67,10 +62,8 @@ function handleDelete(index: number) {
 
 function handleSave(sector: Sector) {
   if (editingSectorIndex.value !== null) {
-    // Редактирование
     sectors.value[editingSectorIndex.value] = sector;
   } else {
-    // Добавление
     sectors.value.push(sector);
   }
   isModalOpen.value = false;
@@ -114,9 +107,15 @@ function handleSave(sector: Sector) {
   .chart-page {
     display: flex;
     flex-direction: column;
-    align-items: center;
+    align-items: flex-start;
     gap: 2rem;
     padding: 20px;
+  }
+
+  h2 {
+    width: 100%;
+    padding-bottom: 15px;
+    border-bottom: 1px solid #ccc;
   }
 
   .content-wrapper {

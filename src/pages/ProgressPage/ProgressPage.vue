@@ -1,39 +1,40 @@
 <script setup lang="ts">
-  import {ref} from "vue";
-  import CircleProgress from '../../components/CircleProgress/CircleProgress.vue';
 
-  let interval:number | undefined;
-  const progress = ref<number>(10);
-  const state = ref<string>('inProgress');
-  const type = ref<string>('circle');
+import {ref} from 'vue';
+import CircleProgress from '../../components/CircleProgress/CircleProgress.vue';
 
-  function onClickProgress (newValue:number) {
-    progress.value = newValue;
-  }
+let interval:number | undefined;
+const progress = ref<number>(10);
+const state = ref<string>('inProgress');
+const type = ref<string>('circle');
 
-  function onClickProgressAnimationStart () {
-    interval = setInterval(() => {
-      const newVal = progress.value + Math.random() * 10;
-      if (newVal < 100) {
-        progress.value = newVal;
-      } else {
-        progress.value = 100;
-        clearInterval(interval);
-      }
-    }, 500)
-  }
+function onClickProgress (newValue:number) {
+  progress.value = newValue;
+}
 
-  function onClickProgressAnimationStop () {
-    clearInterval(interval);
-  }
+function onClickProgressAnimationStart () {
+  interval = setInterval(() => {
+    const newVal = progress.value + Math.random() * 10;
+    if (newVal < 100) {
+      progress.value = newVal;
+    } else {
+      progress.value = 100;
+      clearInterval(interval);
+    }
+  }, 500);
+}
 
-  function onClickState (newValue:string) {
-    state.value = newValue;
-  }
+function onClickProgressAnimationStop () {
+  clearInterval(interval);
+}
 
-  function onClickType (newValue:string) {
-    type.value = newValue;
-  }
+function onClickState (newValue:string) {
+  state.value = newValue;
+}
+
+function onClickType (newValue:string) {
+  type.value = newValue;
+}
 </script>
 
 <template>

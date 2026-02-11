@@ -1,82 +1,81 @@
 
 <script setup lang="ts">
-  import { computed } from "vue";
-  import { CircularProgressState } from "./types";
+import { computed } from 'vue';
+import { CircularProgressState } from './types';
 
-  const props = defineProps({
-    size: {
-      type: Number,
-      default: 120
-    },
-    progress: {
-      type: Number,
-      default: 0
-    },
-    state: {
-      type: String,
-      default: 'inProgress',
-      validator: (value: string) => {
-        return Object.values(CircularProgressState).includes(value as CircularProgressState);
-      }
-    },
-    strokeWidth: {
-      type: Number,
-      default: 10
-    },
-    type: {
-      type: String,
-      default: 'circle',
-      validator: (v: string) => ['circle', 'dashboard'].includes(v)
+const props = defineProps({
+  size: {
+    type: Number,
+    default: 120
+  },
+  progress: {
+    type: Number,
+    default: 0
+  },
+  state: {
+    type: String,
+    default: 'inProgress',
+    validator: (value: string) => {
+      return Object.values(CircularProgressState).includes(value as CircularProgressState);
     }
-  });
+  },
+  strokeWidth: {
+    type: Number,
+    default: 10
+  },
+  type: {
+    type: String,
+    default: 'circle',
+    validator: (v: string) => ['circle', 'dashboard'].includes(v)
+  }
+});
 
-  const stateMap: { [key: string]: string } = {
-    [CircularProgressState.inProgress]: '',
-    [CircularProgressState.success]: '✔️',
-    [CircularProgressState.warning]: '⚠️',
-    [CircularProgressState.error]: '❌',
-  };
+const stateMap: { [key: string]: string } = {
+  [CircularProgressState.inProgress]: '',
+  [CircularProgressState.success]: '✔️',
+  [CircularProgressState.warning]: '⚠️',
+  [CircularProgressState.error]: '❌',
+};
 
-  const size = computed(() => props.size);
-  const strokeWidth = computed(() => props.strokeWidth);
-  const progress = computed(() => Math.round(props.progress));
-  const state = computed(() => props.state);
-  const isDashboard = computed(() => props.type === 'dashboard');
+const size = computed(() => props.size);
+const strokeWidth = computed(() => props.strokeWidth);
+const progress = computed(() => Math.round(props.progress));
+const state = computed(() => props.state);
+const isDashboard = computed(() => props.type === 'dashboard');
 
-  const radius = computed(() => (size.value - strokeWidth.value) / 2);
-  const circleLength = computed(() => 2 * Math.PI * radius.value);
-  const dashboardLength = computed(() => circleLength.value * 0.75);
+const radius = computed(() => (size.value - strokeWidth.value) / 2);
+const circleLength = computed(() => 2 * Math.PI * radius.value);
+const dashboardLength = computed(() => circleLength.value * 0.75);
 
-  const strokeDasharray = computed(() => {
-    if (isDashboard.value) {
-      return `${dashboardLength.value} ${circleLength.value}`;
-    }
-    return circleLength.value;
-  });
+const strokeDasharray = computed(() => {
+  if (isDashboard.value) {
+    return `${dashboardLength.value} ${circleLength.value}`;
+  }
+  return circleLength.value;
+});
 
-  const dashOffset = computed(() => {
-    if (isDashboard.value) {
-      return dashboardLength.value - (progress.value / 100) * dashboardLength.value;
-    }
-    return circleLength.value - (progress.value / 100) * circleLength.value;
-  });
+const dashOffset = computed(() => {
+  if (isDashboard.value) {
+    return dashboardLength.value - (progress.value / 100) * dashboardLength.value;
+  }
+  return circleLength.value - (progress.value / 100) * circleLength.value;
+});
 
-  const rotation = computed(() => {
-    if (isDashboard.value) {
-      return `rotate(135 ${size.value / 2} ${size.value / 2})`;
-    }
-    return `rotate(-90 ${size.value / 2} ${size.value / 2})`;
-  });
+const rotation = computed(() => {
+  if (isDashboard.value) {
+    return `rotate(135 ${size.value / 2} ${size.value / 2})`;
+  }
+  return `rotate(-90 ${size.value / 2} ${size.value / 2})`;
+});
 
-  const color = computed(() => {
-    const hue = (progress.value / 100) * 120;
-    return `hsl(${hue}, 100%, 50%)`;
-  });
+const color = computed(() => {
+  const hue = (progress.value / 100) * 120;
+  return `hsl(${hue}, 100%, 50%)`;
+});
 </script>
 
 <template>
-  <div class="circle-progress-container"
-       >
+  <div class="circle-progress-container">
     <svg
       :width="size"
       :height="size"
