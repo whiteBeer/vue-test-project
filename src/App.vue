@@ -33,6 +33,7 @@
     -moz-osx-font-smoothing: grayscale;
 
     --p-button-label-font-weight: 300;
+    --p-button-border-radius: 10px;
     --p-floatlabel-color: #99A1B7;
   }
 </style>
