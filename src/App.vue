@@ -32,7 +32,7 @@
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
 
-    --p-button-label-font-weight: 300 !important;
+    --p-button-label-font-weight: 300;
     --p-floatlabel-color: #99A1B7;
   }
 </style>
