@@ -3,7 +3,7 @@
 
 <template>
   <nav>
-    <RouterLink to="/" exact-active-class="active">Progress Page</RouterLink>
+    <RouterLink to="/" active-class="active">Progress Page</RouterLink>
     <RouterLink to="/chart-page" active-class="active">Chart Page</RouterLink>
   </nav>
   <main>

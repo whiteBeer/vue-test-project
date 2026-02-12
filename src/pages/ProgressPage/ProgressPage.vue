@@ -6,14 +6,14 @@ import CircleProgress from '../../components/CircleProgress/CircleProgress.vue';
 let interval:number | undefined;
 
 const sizes = ref<{ size:number, stroke:number, fontSize:string }>({
-  size: 200, stroke: 12, fontSize: '30px'
+  size: 200, stroke: 12, fontSize: '18px'
 });
 const progress = ref<number>(10);
 const state = ref<string>('inProgress');
 const type = ref<string>('circle');
 
 
-function onClickSize (size:number, stroke: number, fontSize: string = '14px') {
+function onClickSize (size:number, stroke:number, fontSize:string) {
   sizes.value = {size, stroke, fontSize};
 }
 
@@ -62,9 +62,9 @@ function isActiveBtn (param:string, val:string|number) {
   <button :class="{ active: isActiveBtn('size', 50) }"
            @click="() => onClickSize(50, 5, '9px')">Size 50, Stroke 5</button>
   <button :class="{ active: isActiveBtn('size', 100) }"
-          @click="() => onClickSize(100, 10)">Size 100, Stroke 10</button>
+          @click="() => onClickSize(100, 10, '14px')">Size 100, Stroke 10</button>
   <button :class="{ active: isActiveBtn('size', 200) }"
-          @click="() => onClickSize(200, 12, '30px')">Size 200, Stroke 12</button>
+          @click="() => onClickSize(200, 12, '18px')">Size 200, Stroke 12</button>
 
   <br/>
   <br/>

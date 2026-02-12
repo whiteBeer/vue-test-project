@@ -84,6 +84,7 @@ function handleSave(sector: Sector) {
       />
 
       <div class="chart-container">
+        <!-- @vue-expect-error undocumented option "legend.position" -->
         <Pie :data="chartData" :options="chartOptions" />
       </div>
     </div>

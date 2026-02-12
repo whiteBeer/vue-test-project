@@ -20,7 +20,7 @@ const emit = defineEmits<{
 }>();
 
 const name = ref('');
-const value = ref<number | undefined>(undefined);
+const value = ref<string>('');
 const color = ref('#5272e3');
 const isColorPickerVisible = ref(false);
 
@@ -30,11 +30,11 @@ watch(
     if (isOpen) {
       if (props.sectorToEdit) {
         name.value = props.sectorToEdit.label;
-        value.value = props.sectorToEdit.value;
+        value.value = props.sectorToEdit.value.toString();
         color.value = props.sectorToEdit.color;
       } else {
         name.value = '';
-        value.value = undefined;
+        value.value = '';
         color.value = '#5272e3';
       }
       isColorPickerVisible.value = false;
@@ -61,7 +61,7 @@ function handleSubmit() {
 }
 
 const isFormValid = computed(() => {
-  return !!name.value && value.value !== undefined && value.value > 0 && !!color.value;
+  return !!name.value && value.value !== undefined && parseInt(value.value) > 0 && !!color.value;
 });
 </script>
 
@@ -108,17 +108,17 @@ const isFormValid = computed(() => {
     font-weight: 500;
     margin: 0;
   }
+
   .modal-form {
     display: flex;
     flex-direction: column;
     gap: 25px;
   }
-  .form-group {
-    margin-top: 1rem;
-  }
+
   .p-inputtext, .p-inputnumber {
     width: 100%;
   }
+
   .p-floatlabel {
     margin-top: 0;
   }
