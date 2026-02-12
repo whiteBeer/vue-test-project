@@ -4,3 +4,8 @@ export enum CircularProgressState {
   warning = 'warning',
   error = 'error',
 }
+
+export enum CircularProgressType {
+  circle = 'circle',
+  dashboard = 'dashboard',
+}

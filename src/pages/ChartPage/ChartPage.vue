@@ -5,13 +5,13 @@ import { ref, computed } from 'vue';
 import { Pie } from 'vue-chartjs';
 import { Chart as ChartJS, Title, Legend, ArcElement } from 'chart.js';
 import ChartModal from './ChartModal.vue';
-import Button from 'primevue/button';
+import ChartSectors from './ChartSectors.vue';
 
 ChartJS.register(Title, Legend, ArcElement);
 
 const isModalOpen = ref(false);
 const sectors = ref<Sector[]>([
-  { label: 'Сектор-1', value: 40, color: '#41B883' },
+  { label: 'Сектор-1-Сектор-1-Сектор', value: 40, color: '#41B883' },
   { label: 'Сектор-2', value: 20, color: '#E46651' },
   { label: 'Сектор-3', value: 12, color: '#00D8FF' },
 ]);
@@ -22,13 +22,14 @@ const sectorToEdit = computed(() =>
 );
 
 const chartData = computed(() => ({
-  labels: sectors.value.map(s => s.label),
-  datasets: [
-    {
-      backgroundColor: sectors.value.map(s => s.color),
-      data: sectors.value.map(s => s.value),
-    },
-  ],
+  labels: sectors.value.map(it => {
+    //TODO: make in common way
+    return it.label.length > 15 ? it.label.substring(0, 15) + '...' : it.label;
+  }),
+  datasets: [{
+    backgroundColor: sectors.value.map(s => s.color),
+    data: sectors.value.map(s => s.value),
+  }],
 }));
 
 const chartOptions = ref({
@@ -75,19 +76,12 @@ function handleSave(sector: Sector) {
     <h2>Круговая диаграмма</h2>
 
     <div class="content-wrapper">
-      <div class="sectors-list">
-        <div v-for="(sector, index) in sectors" :key="index" class="sector-item">
-          <div class="sector-info">
-            <span class="color-indicator" :style="{ backgroundColor: sector.color }"></span>
-            <span class="sector-label">{{ sector.label }}: {{ sector.value }}</span>
-          </div>
-          <div class="sector-actions">
-            <Button label="Edit" size="small" text rounded @click="openEditModal(index)" />
-            <Button label="Del" size="small" text rounded severity="danger" @click="handleDelete(index)" />
-          </div>
-        </div>
-        <Button label="Добавить сектор" @click="openAddModal" class="add-btn" />
-      </div>
+      <ChartSectors
+        :sectors="sectors"
+        @edit="openEditModal"
+        @delete="handleDelete"
+        @add="openAddModal"
+      />
 
       <div class="chart-container">
         <Pie :data="chartData" :options="chartOptions" />
@@ -108,63 +102,26 @@ function handleSave(sector: Sector) {
     display: flex;
     flex-direction: column;
     align-items: flex-start;
-    gap: 2rem;
+    gap: 40px;
     padding: 20px;
   }
 
   h2 {
     width: 100%;
     padding-bottom: 15px;
-    border-bottom: 1px solid #ccc;
+    font-size: 32px;
+    font-weight: 600;
+    border-bottom: 1px solid #DBDFE9;
+    margin: 0;
   }
 
   .content-wrapper {
     display: flex;
-    gap: 4rem;
+    gap: 40px;
     align-items: flex-start;
     width: 100%;
-    max-width: 900px;
+    max-width: 1200px;
     justify-content: center;
-  }
-
-  .sectors-list {
-    flex: 1;
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
-    min-width: 300px;
-  }
-
-  .sector-item {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 10px;
-    border: 1px solid #eee;
-    border-radius: 8px;
-    background: #f9f9f9;
-  }
-
-  .sector-info {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-  }
-
-  .color-indicator {
-    width: 16px;
-    height: 16px;
-    border-radius: 50%;
-    display: inline-block;
-  }
-
-  .sector-label {
-    font-weight: 500;
-  }
-
-  .sector-actions {
-    display: flex;
-    gap: 5px;
   }
 
   .chart-container {
@@ -174,8 +131,17 @@ function handleSave(sector: Sector) {
     min-width: 400px;
   }
 
-  .add-btn {
-    margin-top: 10px;
-    align-self: flex-start;
+  @media (max-width: 900px) {
+    .content-wrapper {
+      flex-direction: column;
+      align-items: center;
+      gap: 40px;
+    }
+
+    .chart-container {
+      width: 100%;
+      min-width: 0;
+      max-width: 500px;
+    }
   }
 </style>

@@ -12,7 +12,6 @@ const emit = defineEmits<{
   <Teleport to="body">
     <div v-if="isOpen" class="modal-overlay" @click.self="emit('close')">
       <div class="modal-content">
-        <button class="close-btn" @click="emit('close')">×</button>
         <slot></slot>
       </div>
     </div>
@@ -35,7 +34,7 @@ const emit = defineEmits<{
 
   .modal-content {
     background: white;
-    padding: 2rem;
+    padding: 20px;
     border-radius: 8px;
     width: 90%;
     max-width: 500px;
@@ -43,20 +42,5 @@ const emit = defineEmits<{
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
     max-height: 90vh;
     overflow-y: auto;
-  }
-
-  .close-btn {
-    position: absolute;
-    top: 10px;
-    right: 10px;
-    background: none;
-    border: none;
-    font-size: 1.5rem;
-    cursor: pointer;
-    color: #666;
-  }
-
-  .close-btn:hover {
-    color: #000;
   }
 </style>

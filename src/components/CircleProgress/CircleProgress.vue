@@ -1,7 +1,7 @@
 
 <script setup lang="ts">
 import { computed } from 'vue';
-import { CircularProgressState } from './types';
+import { CircularProgressState, CircularProgressType } from './types';
 
 const props = defineProps({
   size: {
@@ -23,10 +23,16 @@ const props = defineProps({
     type: Number,
     default: 10
   },
+  fontSize: {
+    type: String,
+    default: '1.2rem'
+  },
   type: {
     type: String,
     default: 'circle',
-    validator: (v: string) => ['circle', 'dashboard'].includes(v)
+    validator: (v: string) => {
+      return Object.values(CircularProgressType).includes(v as CircularProgressType);
+    }
   }
 });
 
@@ -107,7 +113,7 @@ const color = computed(() => {
       />
     </svg>
 
-    <div class="label">
+    <div class="label" :style="{ fontSize: fontSize, lineHeight: fontSize }">
       {{ stateMap[state] ? stateMap[state] : (progress + '%') }}
     </div>
   </div>
@@ -127,7 +133,6 @@ const color = computed(() => {
     left: 50%;
     transform: translate(-50%, -50%);
     font-weight: 600;
-    font-size: 1.2rem;
     pointer-events: none;
     color: #555;
   }
